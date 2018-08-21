@@ -9,11 +9,27 @@
         android:layout_height="wrap_content"
         android:text="Hello World! I`m plugin_demo"
         />
-
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btn_dialog"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="展示弹框"/>
+    <Button
+        android:id="@+id/btn_requestnet"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="请求网络"/>
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:text="跳转下一页"/>

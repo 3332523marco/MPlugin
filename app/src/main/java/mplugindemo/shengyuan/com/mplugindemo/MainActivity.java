@@ -21,7 +21,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         mPluginManager = MPluginManager.getInstance(this);
         setPluginResource(mPluginManager.loadPluginResource(dexPath));
-        mPluginManager.loadApk(dexPath,"mplugindemo.shengyuan.com.mplugin_demo.MainActivity");
+        mPluginManager.installPlugin(dexPath,"mplugindemo.shengyuan.com.mplugin_demo.MainActivity");
     }
 
     @Override

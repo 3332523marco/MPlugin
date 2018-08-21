@@ -43,7 +43,7 @@ public class MPluginManager {
        return ResourceManager.getInstance().loadResources(dexPath,mContext);
     }
 
-    public void loadApk(String dexPath,String className){
+    public void installPlugin(String dexPath,String className){
         HookUtil.hookDexElements(mContext,dexPath);
         startActivity(dexPath,className);
     }

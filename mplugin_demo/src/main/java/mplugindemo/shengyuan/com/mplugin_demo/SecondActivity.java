@@ -52,21 +52,6 @@ public class SecondActivity extends MPluginActivity {
     protected void onDestroy() {
         super.onDestroy();
         mRecyclerView.removeAllViews();
-//        Class clazz=getWindow().getDecorView().getClass().getSuperclass().getSuperclass().getSuperclass();
-//        Field field= null;
-//        try {
-//            field = clazz.getDeclaredField("mContext");
-//            field.setAccessible(true);
-//            Log.i("SecondActivity","context "+field);
-//            //如果是私有的可以用getDeclaedField("name")方法获取
-//            //通过set(obj, "李四") //获取姓名字段
-////            field.setAccessible(true);//如果是私有的需要先调用setAccessible(true)设置访问权限,
-//            field.set(getWindow().getDecorView(),null);
-//        } catch (NoSuchFieldException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
         mRecyclerView = null;
     }
 }

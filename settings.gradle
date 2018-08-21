@@ -1,0 +1,1 @@
+include ':app', ':mplugin_base', ':mplugin_demo', ':mplugin_core'

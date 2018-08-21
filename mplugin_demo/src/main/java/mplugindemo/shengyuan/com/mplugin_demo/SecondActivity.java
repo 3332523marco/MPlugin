@@ -29,7 +29,7 @@ public class SecondActivity extends MPluginActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         // 初始化適配器
-        mRecyclerAdapter = new RecyclerAdapter(pluginContext, getData());
+        mRecyclerAdapter = new RecyclerAdapter(getPluginContext(), getData());
         mRecyclerAdapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int position) {

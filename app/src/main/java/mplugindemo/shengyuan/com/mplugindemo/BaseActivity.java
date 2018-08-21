@@ -13,11 +13,7 @@ import mplugindemo.shengyuan.com.mplugin_core.resource.MPluginResource;
 public class BaseActivity extends AppCompatActivity {
 
     private MPluginResource mPluginResource;
-
-    public MPluginResource getPluginResource() {
-        return mPluginResource;
-    }
-
+    
     public void setPluginResource(MPluginResource mPluginResource) {
         this.mPluginResource = mPluginResource;
     }

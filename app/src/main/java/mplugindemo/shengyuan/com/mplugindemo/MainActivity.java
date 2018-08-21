@@ -12,7 +12,7 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String  dexPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-            + File.separator + "mplugin_demo28.apk";
+            + File.separator + "mplugin_demo-debug.apk";
     private MPluginManager mPluginManager;
 
     @Override

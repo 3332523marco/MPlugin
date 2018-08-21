@@ -24,17 +24,25 @@ public class MPluginActivity extends AppCompatActivity{
 
     @Override
     public void setContentView(int layoutResID) {
-        mView = LayoutInflater.from(pluginContext).inflate(layoutResID, null);
-        super.setContentView(mView);
+        if(pluginContext!=null) {
+            mView = LayoutInflater.from(pluginContext).inflate(layoutResID, null);
+            super.setContentView(mView);
+        }else{
+            super.setContentView(layoutResID);
+        }
     }
 
     @Override
     public View findViewById(int viewId) {
         if (mView == null) {
-            return null;
+            return super.findViewById(viewId);
         } else {
             return mView.findViewById(viewId);
         }
+    }
+
+    protected Context getPluginContext(){
+        return pluginContext==null?getBaseContext():pluginContext;
     }
 
     @Override

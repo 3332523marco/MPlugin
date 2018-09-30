@@ -26,6 +26,14 @@
         android:gravity="center"
         android:text="请求网络"/>
     <Button
+        android:id="@+id/btn_jni"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:text="请求jni"/>
+    <Button
         android:id="@+id/btn_next"
         android:layout_width="100dp"
         android:layout_height="100dp"

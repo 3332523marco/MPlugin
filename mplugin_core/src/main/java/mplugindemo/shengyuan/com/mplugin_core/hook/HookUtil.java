@@ -8,14 +8,20 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
+import java.util.List;
 
 import dalvik.system.PathClassLoader;
 import mplugindemo.shengyuan.com.mplugin_core.proxy.ProxyActivity;
+import mplugindemo.shengyuan.com.mplugin_core.util.FileUtils;
 
 /**
  * Created by mapeng on 2018/5/28.
@@ -201,9 +207,18 @@ public class HookUtil {
         }
     }
 
+    public static ClassLoader hookApkInfo(Context context,String apkPath,boolean isCopySo){
+        if(isCopySo) {
+            String path = FileUtils.copySo(context, apkPath);
+            insertNativeLibraryPathElements(new File(path),context);
+        }
+        HookUtil.hookInstrumentation(context);
+        return hookDexElements(context,apkPath);
+    }
+
     public static ClassLoader hookDexElements(Context context,String dexPath){
         try {
-            PathClassLoader pathClassLoader = (PathClassLoader)context.getApplicationContext().getClassLoader();
+            PathClassLoader pathClassLoader = (PathClassLoader)context.getClassLoader();
             Class<?> herosClass = pathClassLoader.getClass().getSuperclass();
             Method m1 = herosClass.getMethod("addDexPath", String.class);
             m1.setAccessible(true);
@@ -214,6 +229,91 @@ public class HookUtil {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void insertNativeLibraryPathElements(File soDirFile, Context context){
+        PathClassLoader pathClassLoader = (PathClassLoader) context.getClassLoader();
+        Object pathList = getPathList(pathClassLoader);
+        if(pathList != null) {
+            Field nativeLibraryPathElementsField = null;
+            try {
+
+                Method makePathElements;
+                Object invokeMakePathElements;
+                boolean isNewVersion = Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1;
+                //调用makePathElements
+                makePathElements = isNewVersion?pathList.getClass().getDeclaredMethod("makePathElements", List.class):pathList.getClass().getDeclaredMethod("makePathElements", List.class,List.class,ClassLoader.class);
+                makePathElements.setAccessible(true);
+                ArrayList<IOException> suppressedExceptions = new ArrayList<>();
+                List<File> nativeLibraryDirectories = new ArrayList<>();
+                nativeLibraryDirectories.add(soDirFile);
+                List<File> allNativeLibraryDirectories = new ArrayList<>(nativeLibraryDirectories);
+                //获取systemNativeLibraryDirectories
+                Field systemNativeLibraryDirectoriesField = pathList.getClass().getDeclaredField("systemNativeLibraryDirectories");
+                systemNativeLibraryDirectoriesField.setAccessible(true);
+                List<File> systemNativeLibraryDirectories = (List<File>) systemNativeLibraryDirectoriesField.get(pathList);
+                Log.i("insertNativeLibrary","systemNativeLibraryDirectories "+systemNativeLibraryDirectories);
+                allNativeLibraryDirectories.addAll(systemNativeLibraryDirectories);
+                invokeMakePathElements = isNewVersion?makePathElements.invoke(pathClassLoader, allNativeLibraryDirectories):makePathElements.invoke(pathClassLoader, allNativeLibraryDirectories,suppressedExceptions,pathClassLoader);
+                Log.i("insertNativeLibrary","makePathElements "+invokeMakePathElements);
+
+                nativeLibraryPathElementsField = pathList.getClass().getDeclaredField("nativeLibraryPathElements");
+                nativeLibraryPathElementsField.setAccessible(true);
+                Object list = nativeLibraryPathElementsField.get(pathList);
+                Log.i("insertNativeLibrary","nativeLibraryPathElements "+list);
+                Object dexElementsValue = combineArray(list, invokeMakePathElements);
+                //把组合后的nativeLibraryPathElements设置到系统中
+                nativeLibraryPathElementsField.set(pathList,dexElementsValue);
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public static Object combineArray(Object hostDexElementValue, Object pluginDexElementValue) {
+        //获取原数组类型
+        Class<?> localClass = hostDexElementValue.getClass().getComponentType();
+        Log.i("insertNativeLibrary","localClass "+localClass);
+        //获取原数组长度
+        int i = Array.getLength(hostDexElementValue);
+        //插件数组加上原数组的长度
+        int j = i + Array.getLength(pluginDexElementValue);
+        //创建一个新的数组用来存储
+        Object result = Array.newInstance(localClass, j);
+        //一个个的将dex文件设置到新数组中
+        for (int k = 0; k < j; ++k) {
+            if (k < i) {
+                Array.set(result, k, Array.get(hostDexElementValue, k));
+            } else {
+                Array.set(result, k, Array.get(pluginDexElementValue, k - i));
+            }
+        }
+        return result;
+    }
+
+    public static Object getPathList(Object classLoader) {
+        Class cls = null;
+        String pathListName = "pathList";
+        try {
+            cls = Class.forName("dalvik.system.BaseDexClassLoader");
+            Field declaredField = cls.getDeclaredField(pathListName);
+            declaredField.setAccessible(true);
+            return declaredField.get(classLoader);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;

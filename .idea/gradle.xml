@@ -9,7 +9,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/mplugin_base" />
             <option value="$PROJECT_DIR$/mplugin_core" />
             <option value="$PROJECT_DIR$/mplugin_demo" />
           </set>

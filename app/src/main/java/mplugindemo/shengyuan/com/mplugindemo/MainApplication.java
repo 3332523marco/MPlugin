@@ -2,8 +2,11 @@ package mplugindemo.shengyuan.com.mplugindemo;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 
 import com.squareup.leakcanary.LeakCanary;
+
+import java.io.File;
 
 import mplugindemo.shengyuan.com.mplugin_core.MPluginManager;
 
@@ -12,6 +15,9 @@ import mplugindemo.shengyuan.com.mplugin_core.MPluginManager;
  */
 
 public class MainApplication extends Application {
+
+    private static final String  apkPath = Environment.getExternalStorageDirectory().getAbsolutePath()
+            + File.separator + "mplugin168.apk";
 
     @Override
     public void onCreate() {
@@ -22,6 +28,6 @@ public class MainApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MPluginManager.getInstance(base).prepare();
+        MPluginManager.getInstance(base).prepare(apkPath,true);
     }
 }

@@ -21,18 +21,20 @@ public class MPluginBaseActivity extends AppCompatActivity {
     protected Context pluginContext;
     private View mView;
     private MPluginManager mPluginManager;
+    private boolean isPlugin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPluginManager = MPluginManager.getInstance(this);
         pluginContext = mPluginManager.getPluginPackgaeInfo().getContext();
+        isPlugin = pluginContext != null;
         mPluginManager.addActCount();
     }
 
     @Override
     public void setContentView(int layoutResID) {
-        if(pluginContext!=null) {
+        if(isPlugin) {
             mView = LayoutInflater.from(pluginContext).inflate(layoutResID, null);
             super.setContentView(mView);
         }else{
@@ -54,19 +56,21 @@ public class MPluginBaseActivity extends AppCompatActivity {
     }
 
     protected Context getPluginContext(){
-        return pluginContext==null?getBaseContext():pluginContext;
+        return !isPlugin?getBaseContext():pluginContext;
     }
 
     @Override
     public void finish() {
-        if(mPluginManager.isOnlyCount()){
-            Log.i(TAG,"MPluginBaseActivity finish ");
-            Activity activity = (Activity)pluginContext;
-            if(!activity.isFinishing()){
-                activity.finish();
+        if(isPlugin) {
+            if (mPluginManager.isOnlyCount()) {
+                Log.i(TAG, "MPluginBaseActivity finish ");
+                Activity activity = (Activity) pluginContext;
+                if (!activity.isFinishing()) {
+                    activity.finish();
+                }
             }
+            mPluginManager.delActCount();
         }
-        mPluginManager.delActCount();
         super.finish();
     }
 

@@ -11,6 +11,7 @@ import mplugindemo.shengyuan.com.mplugin_core.resource.MPluginResource;
 public class MPluginPackgaeInfo {
     private MPluginResource mPluginResource;
     private ClassLoader mPluginLoader;
+    private String apkPath;
     private Context mContext;
 
     public MPluginResource getPluginResource() {
@@ -35,6 +36,14 @@ public class MPluginPackgaeInfo {
 
     public void setContext(Context mContext) {
         this.mContext = mContext;
+    }
+
+    public String getApkPath() {
+        return apkPath;
+    }
+
+    public void setApkPath(String apkPath) {
+        this.apkPath = apkPath;
     }
 
     public void clear(){

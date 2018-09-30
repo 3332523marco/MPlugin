@@ -66,7 +66,7 @@ public class MPluginResourceManager {
     }
 
     private void initializeActivityInfo(String dexPath, Context context) {
-        packageInfo = context.getApplicationContext().getPackageManager().getPackageArchiveInfo(dexPath,
+        packageInfo = context.getPackageManager().getPackageArchiveInfo(dexPath,
                 PackageManager.GET_ACTIVITIES | PackageManager.GET_SERVICES);
         if ((packageInfo.activities != null) && (packageInfo.activities.length > 0)) {
 //            if (mClass == null) {

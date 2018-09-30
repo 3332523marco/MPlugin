@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/MPlugin3.iml" filepath="$PROJECT_DIR$/MPlugin3.iml" />
       <module fileurl="file://$PROJECT_DIR$/MPluginDemo.iml" filepath="$PROJECT_DIR$/MPluginDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mplugin_base/mplugin_base.iml" filepath="$PROJECT_DIR$/mplugin_base/mplugin_base.iml" />
       <module fileurl="file://$PROJECT_DIR$/mplugin_core/mplugin_core.iml" filepath="$PROJECT_DIR$/mplugin_core/mplugin_core.iml" />
       <module fileurl="file://$PROJECT_DIR$/mplugin_demo/mplugin_demo.iml" filepath="$PROJECT_DIR$/mplugin_demo/mplugin_demo.iml" />
     </modules>

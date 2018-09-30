@@ -24,6 +24,15 @@ public class MainActivity extends MPluginBaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    // 步骤1:加载生成的so库文件
+    // 注意要跟so库文件名相同
+    static {
+        System.loadLibrary("hello_jni");
+    }
+
+    // 步骤2:定义在JNI中实现的方法
+    public native String getFromJNI();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
@@ -70,6 +79,12 @@ public class MainActivity extends MPluginBaseActivity {
                         }
                     }
                 }).start();
+            }
+        });
+        findViewById(R.id.btn_jni).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this,getFromJNI(),Toast.LENGTH_SHORT).show();
             }
         });
         findViewById(R.id.btn_next).setOnClickListener(new View.OnClickListener() {

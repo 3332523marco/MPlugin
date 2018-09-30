@@ -14,6 +14,9 @@ import android.util.Log;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import mplugindemo.shengyuan.com.mplugin_core.proxy.ProxyActivity;
+
+
 /**
  * Created by mapeng on 2018/5/30.
  */
@@ -43,7 +46,7 @@ public class HookInstrumentationProxy extends Instrumentation {
         //清单中找不到当前的Activity，表示未注册，需要替换为代理的Activity
         if (resolveInfos != null && resolveInfos.size() == 0){
             intentProxy = new Intent();
-            intentProxy.setComponent(new ComponentName(mContext,ProxyActivity.class));
+            intentProxy.setComponent(new ComponentName(mContext, ProxyActivity.class));
             intentProxy.putExtra(REAL_INTENT, intent);
             Log.i(TAG,"intentProxy  replace intent");
         }

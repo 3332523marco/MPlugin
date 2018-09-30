@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import mplugindemo.shengyuan.com.mplugin_base.MPluginActivity;
+import mplugindemo.shengyuan.com.mplugin_core.MPluginBaseActivity;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -20,7 +20,7 @@ import okhttp3.Response;
  * Created by mapeng on 2018/8/19.
  */
 
-public class MainActivity extends MPluginActivity{
+public class MainActivity extends MPluginBaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -33,9 +33,9 @@ public class MainActivity extends MPluginActivity{
             @Override
             public void onClick(View view) {
               AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
-                .setTitle("这是标题")
+                .setTitle(getPluginResources().getString(R.string.app_name))
                 .setMessage("有多个按钮")
-                .setIcon(R.mipmap.ic_launcher)
+                .setIcon(getPluginResources().getDrawable(R.mipmap.ic_launcher_roun22d))
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

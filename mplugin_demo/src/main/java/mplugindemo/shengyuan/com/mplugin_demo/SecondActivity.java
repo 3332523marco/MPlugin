@@ -10,13 +10,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import mplugindemo.shengyuan.com.mplugin_base.MPluginActivity;
+import mplugindemo.shengyuan.com.mplugin_core.MPluginBaseActivity;
 
 /**
  * Created by mapeng on 2018/8/19.
  */
 
-public class SecondActivity extends MPluginActivity {
+public class SecondActivity extends MPluginBaseActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mRecyclerAdapter;

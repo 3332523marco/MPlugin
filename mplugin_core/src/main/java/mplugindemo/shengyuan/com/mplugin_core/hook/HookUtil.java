@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 import dalvik.system.PathClassLoader;
-import mplugindemo.shengyuan.com.mplugin_base.MPluginContextManager;
+import mplugindemo.shengyuan.com.mplugin_core.proxy.ProxyActivity;
 
 /**
  * Created by mapeng on 2018/5/28.
@@ -201,14 +201,14 @@ public class HookUtil {
         }
     }
 
-    public static void hookDexElements(Context context,String dexPath){
+    public static ClassLoader hookDexElements(Context context,String dexPath){
         try {
-            MPluginContextManager.getInstance().setContext(context);
-            PathClassLoader pathClassLoader = (PathClassLoader)context.getClassLoader();
+            PathClassLoader pathClassLoader = (PathClassLoader)context.getApplicationContext().getClassLoader();
             Class<?> herosClass = pathClassLoader.getClass().getSuperclass();
             Method m1 = herosClass.getMethod("addDexPath", String.class);
             m1.setAccessible(true);
             m1.invoke(pathClassLoader, dexPath);
+            return pathClassLoader;
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -216,5 +216,6 @@ public class HookUtil {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

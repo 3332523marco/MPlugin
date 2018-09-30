@@ -11,26 +11,24 @@ import android.util.Log;
 
 import java.lang.reflect.Method;
 
-import dalvik.system.DexClassLoader;
-
 /**
  * Created by mapeng on 2018/8/19.
  */
 
-public class ResourceManager {
+public class MPluginResourceManager {
 
-    private static ResourceManager INSTANCE;
+    private static MPluginResourceManager INSTANCE;
     private AssetManager mAssetManager;
     private Resources mResources;
     private Resources.Theme mTheme;
     private ActivityInfo mActivityInfo;
     private PackageInfo packageInfo;
 
-    public static ResourceManager getInstance() {
+    public static MPluginResourceManager getInstance() {
         if (INSTANCE == null) {
-            synchronized (ResourceManager.class) {
+            synchronized (MPluginResourceManager.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new ResourceManager();
+                    INSTANCE = new MPluginResourceManager();
                 }
             }
         }
@@ -56,7 +54,6 @@ public class ResourceManager {
             context.setTheme(mActivityInfo.theme);
         }
         Resources.Theme superTheme = context.getTheme();
-        DexClassLoader loader = new DexClassLoader(dexPath, context.getCacheDir().getAbsolutePath(),null, context.getClassLoader());
         mResources = new Resources(mAssetManager, superRes.getDisplayMetrics(),superRes.getConfiguration());
         mTheme = mResources.newTheme();
         mTheme.setTo(superTheme);

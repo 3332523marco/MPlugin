@@ -1,4 +1,4 @@
-package mplugindemo.shengyuan.com.mplugindemo;
+package mplugindemo.shengyuan.com.mplugin_core.proxy;
 
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -7,11 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import mplugindemo.shengyuan.com.mplugin_core.resource.MPluginResource;
 
 /**
- * Created by mapeng on 2018/8/19.
+ * Created by mapeng on 2018/9/30.
  */
 
-public class BaseActivity extends AppCompatActivity {
-
+public class ProxyBaseActivity extends AppCompatActivity {
     private MPluginResource mPluginResource;
 
     public void setPluginResource(MPluginResource mPluginResource) {

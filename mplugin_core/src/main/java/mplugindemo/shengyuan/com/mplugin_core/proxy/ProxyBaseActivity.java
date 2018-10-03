@@ -17,13 +17,13 @@ import mplugindemo.shengyuan.com.mplugin_core.resource.MPluginResource;
 
 public class ProxyBaseActivity extends AppCompatActivity {
 
-    protected MPluginPackgaeInfo mPluginPackgaeInfo;
+    protected MPluginManager mPluginManager;
     private MPluginResource mPluginResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPluginPackgaeInfo = MPluginManager.getInstance(this).getPluginPackgaeInfo();
+        mPluginManager = MPluginManager.getInstance(this);
     }
 
     public void setPluginResource(MPluginResource mPluginResource) {
@@ -43,15 +43,5 @@ public class ProxyBaseActivity extends AppCompatActivity {
     @Override
     public synchronized Resources.Theme getTheme() {
         return mPluginResource == null ? super.getTheme() : mPluginResource.theme;
-    }
-
-
-    protected void startActivity(Context context, String className){
-        try {
-            mPluginPackgaeInfo.setContext(context);
-            context.startActivity(new Intent(context,mPluginPackgaeInfo.getPluginLoader().loadClass(className)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

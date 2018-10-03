@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(mPluginManager.isInstall()){
-                    mPluginManager.startPluginActivity(MainActivity.this,"mplugindemo.shengyuan.com.mplugin_demo.MainActivity");
+                    mPluginManager.startProxyActivity(MainActivity.this,"mplugindemo.shengyuan.com.mplugin_demo.MainActivity");
                 }else{
                     Toast.makeText(MainActivity.this,"开启失败",Toast.LENGTH_SHORT).show();
                 }

@@ -57,23 +57,33 @@ public class MPluginManager {
         }
     }
 
-    public void startPluginActivity(Context context,String className){
+    /**
+     * 启动代理Activity
+     * @param context
+     * @param className
+     */
+    public void startProxyActivity(Context context,String className){
         Intent intent = new Intent(context, ProxyActivity.class);
         intent.putExtra("className",className);
         context.startActivity(intent);
     }
 
-    public MPluginPackgaeInfo getPluginPackgaeInfo(){
-        return mPluginPackgaeInfo;
-    }
-
-    public void startActivity(Context context,String className){
+    /**
+     * 启动插件Activity
+     * @param context
+     * @param className
+     */
+    public void startPluginActivity(Context context,String className){
         try {
             mPluginPackgaeInfo.setContext(context);
             context.startActivity(new Intent(context,mPluginPackgaeInfo.getPluginLoader().loadClass(className)));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public MPluginPackgaeInfo getPluginPackgaeInfo(){
+        return mPluginPackgaeInfo;
     }
 
     public boolean isInstall(){

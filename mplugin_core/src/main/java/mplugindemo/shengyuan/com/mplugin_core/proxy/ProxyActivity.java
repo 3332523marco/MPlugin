@@ -16,8 +16,8 @@ public class ProxyActivity extends ProxyBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new View(this));
-        setPluginResource(mPluginPackgaeInfo.getPluginResource());
-        startActivity(this, getIntent().getStringExtra("className"));
+        setPluginResource(mPluginManager.getPluginPackgaeInfo().getPluginResource());
+        mPluginManager.startPluginActivity(this, getIntent().getStringExtra("className"));
     }
 
     @Override
